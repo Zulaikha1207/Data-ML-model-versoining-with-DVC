@@ -9,7 +9,6 @@ git clone https://github.com/iterative/course-ds-base.git
 cd course-ds-base
 ```
 
-
 ### 2. Create and activate virtual environment
 
 Create virtual environment named `dvc-venv` (you may use other name)
