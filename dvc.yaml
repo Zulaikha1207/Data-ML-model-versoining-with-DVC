@@ -7,3 +7,12 @@ stages:
     - data
     outs:
     - data/raw/iris.csv
+  featurize:
+    cmd: python src/stages/featurize.py --config=params.yaml
+    deps:
+    - data/raw/iris.csv
+    - src/stages/featurize.py
+    params:
+    - data
+    outs:
+    - data/processed/featured_iris.csv
