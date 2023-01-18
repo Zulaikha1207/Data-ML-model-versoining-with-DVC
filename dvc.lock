@@ -15,3 +15,154 @@ stages:
     - path: data/raw/iris.csv
       md5: 4224576f0267bf88902f87f0f6200967
       size: 2757
+  featurize:
+    cmd: python src/stages/featurize.py --config=params.yaml
+    deps:
+    - path: data/raw/iris.csv
+      md5: 4224576f0267bf88902f87f0f6200967
+      size: 2757
+    - path: src/stages/featurize.py
+      md5: fe198244beb08cd7fdc85936133a5d36
+      size: 1077
+    params:
+      params.yaml:
+        data:
+          dataset_csv: data/raw/iris.csv
+          features_path: data/processed/featured_iris.csv
+    outs:
+    - path: data/processed/featured_iris.csv
+      md5: 5d03a1564b3038fc35a842f8e4bde491
+      size: 7260
+  data_split:
+    cmd: python src/stages/data_split.py --config=params.yaml
+    deps:
+    - path: data/processed/featured_iris.csv
+      md5: 5d03a1564b3038fc35a842f8e4bde491
+      size: 7260
+    - path: src/stages/data_split.py
+      md5: 773611b4736eca5f8e5bdf799ee6bc92
+      size: 1270
+    params:
+      params.yaml:
+        base:
+          random_state: 42
+        data:
+          dataset_csv: data/raw/iris.csv
+          features_path: data/processed/featured_iris.csv
+        test:
+          test_size: 0.2
+          testset_path: data/processed/test_iris.csv
+        train:
+          trainset_path: data/processed/train_iris.csv
+    outs:
+    - path: data/processed/test_iris.csv
+      md5: b5e45593a772fc66629488e1806505c4
+      size: 1492
+    - path: data/processed/train_iris.csv
+      md5: ed8a7e5ba0a211251bdee6c498fe3eb4
+      size: 5724
+  train:
+    cmd: python src/stages/train.py --config=params.yaml
+    deps:
+    - path: data/processed/train_iris.csv
+      md5: ed8a7e5ba0a211251bdee6c498fe3eb4
+      size: 5724
+    - path: src/stages/train.py
+      md5: 8bcc4f3716b2dbff85bf97a09ab6d277
+      size: 1185
+    params:
+      params.yaml:
+        features:
+          target_column: target
+        model:
+          cv: 3
+          estimator_name: logreg
+          estimators:
+            logreg:
+              param_grid:
+                C:
+                - 0.01
+                solver:
+                - lbfgs
+                multi_class:
+                - multinomial
+                max_iter:
+                - 100
+            svm:
+              param_grid:
+                C:
+                - 0.1
+                - 1.0
+                kernel:
+                - rbf
+                - linear
+                gamma:
+                - scale
+                degree:
+                - 3
+                - 5
+          model_path: models/model.joblib
+        train:
+          trainset_path: data/processed/train_iris.csv
+    outs:
+    - path: models/model.joblib
+      md5: e8d350a10492674e6277b7d6684c1041
+      size: 2669
+  evaluate:
+    cmd: python src/stages/evaluate.py --config=params.yaml
+    deps:
+    - path: data/processed/test_iris.csv
+      md5: b5e45593a772fc66629488e1806505c4
+      size: 1492
+    - path: models/model.joblib
+      md5: e8d350a10492674e6277b7d6684c1041
+      size: 2669
+    - path: src/stages/evaluate.py
+      md5: 809243cb0ea4c29746f55767eb940a1c
+      size: 2235
+    params:
+      params.yaml:
+        evaluate:
+          metrics_file: metrics.json
+          reports_dir: reports
+          confusion_matrix_image: confusion_matrix.png
+        features:
+          target_column: target
+        model:
+          cv: 3
+          estimator_name: logreg
+          estimators:
+            logreg:
+              param_grid:
+                C:
+                - 0.01
+                solver:
+                - lbfgs
+                multi_class:
+                - multinomial
+                max_iter:
+                - 100
+            svm:
+              param_grid:
+                C:
+                - 0.1
+                - 1.0
+                kernel:
+                - rbf
+                - linear
+                gamma:
+                - scale
+                degree:
+                - 3
+                - 5
+          model_path: models/model.joblib
+        test:
+          test_size: 0.2
+          testset_path: data/processed/test_iris.csv
+    outs:
+    - path: reports/confusion_matrix.png
+      md5: 64609d4d2fe8d2718531f253d881dde6
+      size: 24999
+    - path: reports/metrics.json
+      md5: d533847a0ca14ca93752b1b1f1df349e
+      size: 32

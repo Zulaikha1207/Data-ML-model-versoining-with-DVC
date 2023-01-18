@@ -16,3 +16,44 @@ stages:
     - data
     outs:
     - data/processed/featured_iris.csv
+  data_split:
+    cmd: python src/stages/data_split.py --config=params.yaml
+    deps:
+    - data/processed/featured_iris.csv
+    - src/stages/data_split.py
+    params:
+    - data
+    - test
+    - base
+    - train
+    outs:
+    - data/processed/test_iris.csv
+    - data/processed/train_iris.csv
+
+  train:
+    cmd: python src/stages/train.py --config=params.yaml
+    deps:
+    - data/processed/train_iris.csv
+    - src/stages/train.py
+    params:
+    - train
+    - model
+    - features
+    outs:
+    - models/model.joblib
+
+  evaluate:
+    cmd: python src/stages/evaluate.py --config=params.yaml
+    deps:
+    - data/processed/test_iris.csv
+    - src/stages/evaluate.py
+    - models/model.joblib
+    params:
+    - test
+    - model
+    - features
+    - evaluate
+    outs:
+    - reports/metrics.json
+    - reports/confusion_matrix.png
+
