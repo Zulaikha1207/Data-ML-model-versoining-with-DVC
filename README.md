@@ -1,17 +1,10 @@
-## Step-4: Build ml pipeline
+## Step-5: Build ml pipeline
 
 Tasks:
 
-1. create src/stages directory
+1. install DVC (in a virtual environment)
+2. automate ML pipeline with DVC
+3. setup dependencies and outputs
+4. setup parameters
 
-2. create .py modules for each pipeline stage:
-
-- data_load.py
-- data_split.py
-- featurize.py
-- train.py
-- evaluate.py
- 
-3. run each stage
-
-**Requirements: use params.yaml to manage stages configuration
+**Requirements: for each stage, explicitly define dependencies (code and data)
