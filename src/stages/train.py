@@ -30,6 +30,7 @@ def train_model(config_path: Text) -> None:
     print('Saving model..')
     model_path= config["model"]["model_path"]
     joblib.dump(model, model_path)
+    print("Train stage completed!!")
 
 if __name__=='__main__':
     args_parser = argparse.ArgumentParser()
