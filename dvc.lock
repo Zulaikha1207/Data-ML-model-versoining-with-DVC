@@ -81,7 +81,7 @@ stages:
             logreg:
               param_grid:
                 C:
-                - 0.01
+                - 0.001
                 solver:
                 - lbfgs
                 multi_class:
@@ -106,7 +106,7 @@ stages:
           trainset_path: data/processed/train_iris.csv
     outs:
     - path: models/model.joblib
-      md5: 669d189cdf94502253fc408ae1da0143
+      md5: 2d83e45dced778a160d9ad53621b8064
       size: 2669
   evaluate:
     cmd: python src/stages/evaluate.py --config=params.yaml
@@ -115,7 +115,7 @@ stages:
       md5: b5e45593a772fc66629488e1806505c4
       size: 1492
     - path: models/model.joblib
-      md5: 669d189cdf94502253fc408ae1da0143
+      md5: 2d83e45dced778a160d9ad53621b8064
       size: 2669
     - path: src/stages/evaluate.py
       md5: 809243cb0ea4c29746f55767eb940a1c
@@ -135,7 +135,7 @@ stages:
             logreg:
               param_grid:
                 C:
-                - 0.01
+                - 0.001
                 solver:
                 - lbfgs
                 multi_class:
