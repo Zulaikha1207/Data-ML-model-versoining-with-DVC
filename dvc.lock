@@ -81,7 +81,7 @@ stages:
             logreg:
               param_grid:
                 C:
-                - 0.001
+                - 0.1
                 solver:
                 - lbfgs
                 multi_class:
@@ -106,7 +106,7 @@ stages:
           trainset_path: data/processed/train_iris.csv
     outs:
     - path: models/model.joblib
-      md5: 2d83e45dced778a160d9ad53621b8064
+      md5: d22693d564fcea9776c0d7ec3274d924
       size: 2669
   evaluate:
     cmd: python src/stages/evaluate.py --config=params.yaml
@@ -115,11 +115,11 @@ stages:
       md5: b5e45593a772fc66629488e1806505c4
       size: 1492
     - path: models/model.joblib
-      md5: 2d83e45dced778a160d9ad53621b8064
+      md5: d22693d564fcea9776c0d7ec3274d924
       size: 2669
     - path: src/stages/evaluate.py
-      md5: 966019d4129f22c702c1b03f818ab5ae
-      size: 3271
+      md5: ab9062338cd4b03407f5ad9dff9d1c04
+      size: 3004
     params:
       params.yaml:
         evaluate:
@@ -136,7 +136,7 @@ stages:
             logreg:
               param_grid:
                 C:
-                - 0.001
+                - 0.1
                 solver:
                 - lbfgs
                 multi_class:
@@ -162,11 +162,11 @@ stages:
           testset_path: data/processed/test_iris.csv
     outs:
     - path: reports/confusion_matrix.png
-      md5: 64609d4d2fe8d2718531f253d881dde6
-      size: 24999
+      md5: 22d55154d10818eb51520e947cfc7e62
+      size: 24920
     - path: reports/confusion_matrix_data.csv
-      md5: 0c4c338c5b47da4e5d4b8caf497c1b53
-      size: 573
+      md5: c189f029072011dba0a20d6d06a8b4f5
+      size: 575
     - path: reports/metrics.json
-      md5: d533847a0ca14ca93752b1b1f1df349e
-      size: 32
+      md5: 3329ba1a6b18407f725a1e25a5500560
+      size: 17
