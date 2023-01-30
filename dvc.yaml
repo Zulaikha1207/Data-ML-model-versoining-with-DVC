@@ -46,16 +46,19 @@ stages:
     cmd: python src/stages/evaluate.py --config=params.yaml
     deps:
     - data/processed/test_iris.csv
-    - src/stages/evaluate.py
     - models/model.joblib
+    - src/stages/evaluate.py
     params:
-    - test
-    - model
-    - features
     - evaluate
+    - features
+    - model
+    - test
     outs:
     - reports/confusion_matrix.png
     plots:
-    - reports/confusion_matrix_data.csv
+    - reports/confusion_matrix_data.csv:
+        template: confusion
+        x: predicted
+        y: y_true
     metrics:
     - reports/metrics.json
