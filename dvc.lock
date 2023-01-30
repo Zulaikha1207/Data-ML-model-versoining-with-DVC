@@ -164,6 +164,9 @@ stages:
     - path: reports/confusion_matrix.png
       md5: 64609d4d2fe8d2718531f253d881dde6
       size: 24999
+    - path: reports/confusion_matrix_data.csv
+      md5: b46be1c70425ef5f96071c9b4fa3a9ca
+      size: 215
     - path: reports/metrics.json
       md5: d533847a0ca14ca93752b1b1f1df349e
       size: 32

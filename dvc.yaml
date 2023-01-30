@@ -55,5 +55,7 @@ stages:
     - evaluate
     outs:
     - reports/confusion_matrix.png
+    plots:
+    - reports/confusion_matrix_data.csv
     metrics:
     - reports/metrics.json
