@@ -2,7 +2,7 @@
 
 Tasks:
 
- save 'reports/metrics.json` file
- specify metrics in dvc.yaml
- dvc metrics show
- dvc metrics diff
+- save 'reports/metrics.json` file
+- specify metrics in dvc.yaml
+- dvc metrics show
+- dvc metrics diff
