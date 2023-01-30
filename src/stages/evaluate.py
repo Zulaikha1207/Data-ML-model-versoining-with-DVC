@@ -61,6 +61,12 @@ def evaluate_model(config_path: Text) -> None:
     plt.savefig(confusion_matrix_png_path)
     print(f'Confusion matrix saved to : {confusion_matrix_png_path}')
 
+    confusion_matrix_data = pd.DataFrame()
+    confusion_matrix_data['y_test'] = y_test
+    confusion_matrix_data['y_pred'] = prediction
+    print('Saving confusion matrix data...')
+    confusion_matrix_data.to_csv(config['evaluate']['confusion_matrix_data_path'])
+
 
 if __name__ == '__main__':
 
