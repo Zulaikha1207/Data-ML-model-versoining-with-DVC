@@ -10,6 +10,18 @@ import yaml
 
 from src.report.visualization import plot_confusion_matrix
 
+def convert_to_labels(indexes, labels):
+    result = []
+    for i in indexes:
+        result.append(labels[i])
+    return result
+
+def write_confusion_matrix_data(y_true, predicted, labels, filename):
+    assert len(predicted) == len(y_true)
+    predicted_labels = convert_to_labels(predicted, labels)
+    true_labels = convert_to_labels(y_true, labels)
+    cf = pd.DataFrame(list(zip(true_labels, predicted_labels)), columns=["y_true", "predicted"])
+    cf.to_csv(filename, index=False)
 
 def evaluate_model(config_path: Text) -> None:
     
@@ -61,13 +73,11 @@ def evaluate_model(config_path: Text) -> None:
     plt.savefig(confusion_matrix_png_path)
     print(f'Confusion matrix saved to : {confusion_matrix_png_path}')
 
-    confusion_matrix_data = pd.DataFrame()
-    confusion_matrix_data['y_test'] = y_test
-    confusion_matrix_data['y_pred'] = prediction
-    print('Saving confusion matrix data...')
-    confusion_matrix_data.to_csv(config['evaluate']['confusion_matrix_data_path'])
-
-
+    #save confusion matrix data
+    labels = load_iris(as_frame=True).target_names.tolist()
+    confusion_matrix_data_path = config['evaluate']['confusion_matrix_data_path']
+    write_confusion_matrix_data(y_test, prediction, labels=labels, filename=confusion_matrix_data_path)
+    
 if __name__ == '__main__':
 
     args_parser = argparse.ArgumentParser()
