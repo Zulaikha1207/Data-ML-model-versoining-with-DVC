@@ -1,4 +1,8 @@
-# Creating structure in data projects
+# Iterative tools for Data Scientists
+
+This repo covers the [Iterative.ai course](https://learn.iterative.ai/). The aim of the corse is to learn how to create flexible and effective pipeline to get machine learning projects into production efficiently and reproducible. 
+
+## Creating structure in data projects
 
 When starting data projects, we generally follow an ad-hoc workflow for conducting projects. We probably begin with local Python or R notebooks and train models on a local machine. For small projects, this works well: there is little overhead to worry about, and we can iterate quickly.
 
